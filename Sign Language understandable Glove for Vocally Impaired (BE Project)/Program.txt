@@ -10,18 +10,19 @@ AnalogIn Analog_In6 (PTE22);
 AnalogIn Analog_In7 (PTC0);
 AnalogIn Analog_In8 (PTD6);
 AnalogIn Analog_In9 (PTD5);
+//AnalogIn Analog_In10 (PTD5);
+//AnalogIn Analog_In11 (PTD5);
 
 DigitalOut gnd0 (PTA1);
 DigitalOut gnd1 (PTA12);
 DigitalOut gnd2 (PTA2);
 DigitalOut vdd1 (PTE0);
 DigitalOut myled(LED1);
-DigitalOut buzzer(PTD1);
 
 // FVP for lcd.rs,en,d4-d7, type of lcd
 TextLCD lcd(PTD4,PTA4,PTA5,PTC8,PTC9,PTA13, TextLCD::LCD16x2);
-Serial pc(USBTX,USBRX);    
-
+Serial pc(USBTX,USBRX);
+    
 int main() {
     gnd0=0;
     gnd1=0;
@@ -36,7 +37,8 @@ int main() {
     while(1) {
             
         
-        float r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,v0,v1,v2,v3,v4,v5,v6,v7,v8,v9;
+        float r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,v0,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10;
+        //unsigned short v10;
         
         r0=Analog_In0.read();
         r1=Analog_In1.read();
@@ -48,6 +50,7 @@ int main() {
         r7=Analog_In7.read();
         r8=Analog_In8.read();
         r9=Analog_In9.read();
+        //r10=Analog_In10.read();
         v0=Analog_In0*3.3;
         v1=Analog_In1*3.3;
         v2=Analog_In2*3.3;
@@ -58,26 +61,35 @@ int main() {
         v7=Analog_In7*3.3;
         v8=Analog_In8*3.3;
         v9=Analog_In9*3.3;
+        //v10=Analog_In10*3.3;
         
+        /*v10=Analog_In0.read_u16();
+        lcd.locate(1,0);
+        lcd.printf("Analog=%.2f",v1);
+        wait(0.5);
+        
+        lcd.locate(1,1);
+        lcd.printf("Digital=%d",v3);
+        wait(0.5);*/
         
         myled = 0;
         wait(0.2);
         myled = 1;
         wait(0.2);
-        buzzer = 0;
         
         if(i<=15) 
         {
             
-        if(v0>2 && v1>2 && v2>2 && v3>2 && v4>2)  
+        if(v0>2 && v1>2 && v2>2 && v3>2 && v4>2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //00001
         {
             lcd.locate(i,j);
             lcd.printf("A");
+            
             wait(0.5);
             i++;
             a=i;
         }
-        else if(v4<2 && v0>2 && v1>2 && v2>2 && v5>2)
+        else if(v4<2 && v0>2 && v1>2 && v2>2 && v5>2 && v3<2 && v6<2 && v7<2 && v8<2 && v9<2)  //00010
         {
             lcd.locate(i,j);
             lcd.printf("B");
@@ -85,15 +97,16 @@ int main() {
             i++;
             a=i;
         }
-        else if(v8<2 && v0>2 && v1>2 && v2>2 && v4<2 && v5<2 && v6<2 && v7<2)
+        else if(v8<2 && v0>2 && v1>2 && v2>2 && v4<2 && v5<2 && v6<2 && v7<2 && v3<2 && v9<2)  //00011
         {
             lcd.locate(i,j);
             lcd.printf("C");
+            printf("C");
             wait(0.5);
             i++;
             a=i;
         }
-        else if(v0>2 && v1>2 && v4>2 && v2<2 && v5<2)
+        else if(v0>2 && v1>2 && v4>2 && v2<2 && v5<2 && v3<2 && v6<2 && v7<2 && v8<2 && v9<2) //00100
         {
             lcd.locate(i,j);
             lcd.printf("D");
@@ -101,7 +114,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v1>2 && v2>2 && v3<2 && v4>2)
+        else if(v0>2 && v1>2 && v2>2 && v3<2 && v4>2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //00101
         {
             lcd.locate(i,j);
             lcd.printf("E");
@@ -109,7 +122,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v1>2 && v6>2)
+        else if(v0>2 && v1>2 && v6>2 && v2<2 && v3<2 && v4<2 && v5<2 && v7<2 && v8<2 && v9<2)  //00110
         {
             lcd.locate(i,j);
             lcd.printf("F");
@@ -117,7 +130,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v8<2 && v0>2 && v1>2 && v2<2 && v3<2 && v5>2 && v4<2)     
+        else if(v8<2 && v0>2 && v1>2 && v2<2 && v3<2 && v5>2 && v4<2 && v6<2 && v7<2 && v9<2)      //00111****
         {
             lcd.locate(i,j);
             lcd.printf("G");
@@ -125,7 +138,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v8>2) 
+        else if(v0>2 && v2<2 && v5>2 && v7>2 && v1<2 && v3<2 && v4<2 && v6<2 && v8<2 && v9<2)  //01000
         {
             lcd.locate(i,j);
             lcd.printf("H");
@@ -133,7 +146,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0<2 && v1>2 && v2>2 && v5<2 && v7>2)
+        else if(v0<2 && v1>2 && v2>2 && v5>2 && v7>2 && v3<2 && v4<2 && v6<2 && v8<2 && v9<2)  //01001
         {
             lcd.locate(i,j);
             lcd.printf("I");
@@ -141,7 +154,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0<2 && v1>2 && v2>2 && v5<2 && v6>2)
+        else if(v0<2 && v1>2 && v2>2 && v5<2 && v6>2 && v3<2 && v4<2 && v7<2 && v8<2 && v9<2)  //01010
         {
             lcd.locate(i,j);
             lcd.printf("J");
@@ -149,7 +162,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v2>2 && v7<2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2)
+        else if(v0>2 && v2>2 && v7<2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2 && v8<2 && v9<2)  //01011
         {
             lcd.locate(i,j);
             lcd.printf("K");
@@ -157,7 +170,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v1>2 && v5>2 && v4>2)
+        else if(v0>2 && v1>2 && v5>2 && v4>2 && v2<2 && v3<2 && v6<2 && v7<2 && v8<2 && v9<2)  //01100
         {
             lcd.locate(i,j);
             lcd.printf("L");
@@ -165,7 +178,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v9>2 && v2>2 && v8<2}
+        else if(v9>2 && v2>2 && v8<2 && v0<2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2 && v7<2)  //01101
         {
             lcd.locate(i,j);
             lcd.printf("M");
@@ -173,7 +186,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v4>2  && v8>2)
+        else if(v0>2 && v4>2  && v8>2&& v1<2 && v2<2 && v3<2 && v5<2 && v6<2 && v7<2 && v9<2)  //01110
         {
             lcd.locate(i,j);
             lcd.printf("N");
@@ -181,7 +194,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0<2 && v1>2 && v2>2 && v3<2 && v4>2)
+        else if(v0<2 && v1>2 && v2>2 && v3<2 && v4>2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //01111
         {
             lcd.locate(i,j);
             lcd.printf("O");
@@ -189,7 +202,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v1<2 && v2>2 && v5>2 && v4<2)
+        else if(v0>2 && v1<2 && v2>2 && v5>2 && v4<2 && v3<2 && v6<2 && v7<2 && v8<2 && v9<2)  //10000
         {
             lcd.locate(i,j);
             lcd.printf("P");
@@ -197,7 +210,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v1>2 && v5>2)
+        else if(v0>2 && v1>2 && v5>2 && v2<2 && v3<2 && v4<2 && v6<2 && v7<2 && v8<2 && v9<2)  //10001
         {
             lcd.locate(i,j);
             lcd.printf("Q");
@@ -205,7 +218,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v6>2 && v7>2) 
+        else if(v6>2 && v7>2 && v0<2 && v1>2 && v2>2 && v3<2 && v4>2 && v5<2 && v8<2 && v9<2)  //10010  resistance through v9 
         {
             lcd.locate(i,j);
             lcd.printf("R");
@@ -213,7 +226,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v2>2 && v1>2 && v8>2)
+        else if(v0>2 && v2>2 && v1>2 && v8>2&& v3<2 && v4>2 && v5<2 && v6<2 && v7<2 && v9<2)  //10011
         {
             lcd.locate(i,j);
             lcd.printf("S");
@@ -221,7 +234,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v1>2 && v2>2 && v5>2) 
+        else if(v0>2 && v1>2 && v2>2 && v5>2 && v3<2 && v4<2 && v6<2 && v7<2 && v8<2 && v9<2)  //10100
         {
             lcd.locate(i,j);
             lcd.printf("T");
@@ -229,7 +242,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v2>2 && v7>2)
+        else if(v0>2 && v2>2 && v7>2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2 && v8<2 && v9<2)  //10101
         {
             lcd.locate(i,j);
             lcd.printf("U");
@@ -237,7 +250,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v7>2)  
+        else if(v0>2 && v7>2 && v1<2 && v2<2 && v3<2 && v4<2 && v5<2 && v6<2 && v8<2 && v9<2)  //10110
         {
             lcd.locate(i,j);
             lcd.printf("V");
@@ -245,7 +258,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v1<2 && v2<2 && v5>2 && v4<2) 
+        else if(v0>2 && v1<2 && v2<2 && v5>2 && v3<2 && v4<2 && v6<2 && v7<2 && v8<2 && v9<2)  //10111
         {
             lcd.locate(i,j);
             lcd.printf("W");
@@ -253,7 +266,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0>2 && v8>2 && v2<2) 
+        else if(v0>2 && v8>2 && v1<2 && v2<2 && v3<2 && v4<2 && v5<2 && v6<2 && v7<2 && v9<2)  //11000
         {
             lcd.locate(i,j);
             lcd.printf("X");
@@ -261,7 +274,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v0<2 && v1>2 && v2>2)
+        else if(v0<2 && v1>2 && v2>2 && v3<2 && v4<2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //11001
         {
             lcd.locate(i,j);
             lcd.printf("Y");
@@ -269,7 +282,7 @@ int main() {
             i++;
             a=i;
         }
-        else if(v8<2 && v0>2 && v1>2 && v3<2)
+        else if(v0>2 && v1>2 && v3<2 && v2<2 && v4<2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //11010
         {
             lcd.locate(i,j);
             lcd.printf("Z");
@@ -277,7 +290,7 @@ int main() {
             i++;
             a=i;
         }
-         else if(v0<2 && v1<2 && v2<2 && v3>2)
+         else if(v0<2 && v1<2 && v2<2 && v3>2 && v4<2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //11100
         {
             lcd.locate(i,j);
             lcd.printf(" ");
@@ -285,22 +298,20 @@ int main() {
             i++;
             a=i;
         }
-        else if(v9>2)
+        else if(v0>2 && v1<2 && v2<2 && v3<2 && v4<2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //11100
         {
             lcd.locate(i,j);
             lcd.printf(" ");
+            
             wait(0.5);
             i--;
             a=i;
         }
-        else if(v0<2 && v2<2 && v3<2 && v4>2)
+        else if(v0<2 && v1<2 && v2<2 && v3<2 && v4>2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //01111
         {
-            lcd.locate(k,j);
+            lcd.locate(i,j);
             lcd.printf(".");
             wait(0.5);
-            buzzer = 1;
-            wait(2);
-            buzzer = 0;
             i++;
             a=i;
         }
@@ -310,7 +321,7 @@ int main() {
         {
             j=1;
             
-        if(v0>2 && v1>2 && v2>2 && v3>2 && v4>2)
+        if(v0>2 && v1>2 && v2>2 && v3>2 && v4>2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //00001
         {
             lcd.locate(k,j);
             lcd.printf("A");
@@ -320,7 +331,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v4<2 && v0>2 && v1>2 && v2>2 && v5>2) 
+        else if(v4<2 && v0>2 && v1>2 && v2>2 && v5>2 && v3<2 && v6<2 && v7<2 && v8<2 && v9<2)  //00010
         {
             lcd.locate(k,j);
             lcd.printf("B");
@@ -330,7 +341,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v8<2 && v0>2 && v1>2 && v2>2 && v4<2 && v5<2 && v6<2 && v7<2)  
+        else if(v8<2 && v0>2 && v1>2 && v2>2 && v4<2 && v5<2 && v6<2 && v7<2 && v3<2 && v9<2)  //00011
         {
             lcd.locate(k,j);
             lcd.printf("C");
@@ -340,7 +351,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v1>2 && v4>2 && v2<2 && v5<2) 
+        else if(v0>2 && v1>2 && v4>2 && v2<2 && v5<2 && v3<2 && v6<2 && v7<2 && v8<2 && v9<2) //00100
         {
             lcd.locate(k,j);
             lcd.printf("D");
@@ -350,7 +361,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v1>2 && v2>2 && v3<2 && v4>2) 
+        else if(v0>2 && v1>2 && v2>2 && v3<2 && v4>2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //00101
         {
             lcd.locate(k,j);
             lcd.printf("E");
@@ -360,7 +371,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v1>2 && v6>2)  
+        else if(v0>2 && v1>2 && v6>2 && v2<2 && v3<2 && v4<2 && v5<2 && v7<2 && v8<2 && v9<2)  //00110
         {
             lcd.locate(k,j);
             lcd.printf("F");
@@ -370,7 +381,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v8<2 && v0>2 && v1>2 && v2<2 && v3<2 && v5>2 && v4<2)
+        else if(v8<2 && v0>2 && v1>2 && v2<2 && v3<2 && v5>2 && v4<2 && v6<2 && v7<2 && v9<2)      //00111****
         {
             lcd.locate(k,j);
             lcd.printf("G");
@@ -380,7 +391,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v2<2 && v5>2 && v7>2)
+        else if(v0>2 && v2<2 && v5>2 && v7>2 && v1<2 && v3<2 && v4<2 && v6<2 && v8<2 && v9<2)  //01000
         {
             lcd.locate(k,j);
             lcd.printf("H");
@@ -390,7 +401,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0<2 && v1>2 && v2>2 && v5<2 && v7>2)  
+        else if(v0<2 && v1>2 && v2>2 && v5>2 && v7>2 && v3<2 && v4<2 && v6<2 && v8<2 && v9<2)  //01001
         {
             lcd.locate(k,j);
             lcd.printf("I");
@@ -400,7 +411,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0<2 && v1>2 && v2>2 && v5<2 && v6>2)
+        else if(v0<2 && v1>2 && v2>2 && v5<2 && v6>2 && v3<2 && v4<2 && v7<2 && v8<2 && v9<2)  //01010
         {
             lcd.locate(k,j);
             lcd.printf("J");
@@ -410,7 +421,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v2>2 && v7<2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2)
+        else if(v0>2 && v2>2 && v7<2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2 && v8<2 && v9<2)  //01011
         {
             lcd.locate(k,j);
             lcd.printf("K");
@@ -420,7 +431,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v1>2 && v5>2 && v4>2)
+        else if(v0>2 && v1>2 && v5>2 && v4>2 && v2<2 && v3<2 && v6<2 && v7<2 && v8<2 && v9<2)  //01100
         {
             lcd.locate(k,j);
             lcd.printf("L");
@@ -430,7 +441,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v9>2 && v2>2 && v8<2)
+        else if(v9>2 && v2>2 && v8<2 && v0<2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2 && v7<2)  //01101
         {
             lcd.locate(k,j);
             lcd.printf("M");
@@ -440,7 +451,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v4>2  && v8>2)
+        else if(v0>2 && v4>2  && v8>2&& v1<2 && v2<2 && v3<2 && v5<2 && v6<2 && v7<2 && v9<2)  //01110
         {
             lcd.locate(k,j);
             lcd.printf("N");
@@ -450,7 +461,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0<2 && v1>2 && v2>2 && v3<2 && v4>2)
+        else if(v0<2 && v1>2 && v2>2 && v3<2 && v4>2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //01111
         {
             lcd.locate(k,j);
             lcd.printf("O");
@@ -460,7 +471,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v1<2 && v2>2 && v5>2 && v4<2)
+        else if(v0>2 && v1<2 && v2>2 && v5>2 && v4<2 && v3<2 && v6<2 && v7<2 && v8<2 && v9<2)  //10000
         {
             lcd.locate(k,j);
             lcd.printf("P");
@@ -470,7 +481,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v1>2 && v5>2)
+        else if(v0>2 && v1>2 && v5>2 && v2<2 && v3<2 && v4<2 && v6<2 && v7<2 && v8<2 && v9<2)  //10001
         {
             lcd.locate(k,j);
             lcd.printf("Q");
@@ -480,7 +491,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v6>2 && v7>2)   
+        else if(v6>2 && v7>2 && v0<2 && v1>2 && v2>2 && v3<2 && v4>2 && v5<2 && v8<2 && v9<2)  //10010  resistance through v9 
         {
             lcd.locate(k,j);
             lcd.printf("R");
@@ -490,7 +501,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v2>2 && v1>2 && v8>2)  
+        else if(v0>2 && v2>2 && v1>2 && v8>2&& v3<2 && v4>2 && v5<2 && v6<2 && v7<2 && v9<2)  //10011
         {
             lcd.locate(k,j);
             lcd.printf("S");
@@ -500,7 +511,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v1>2 && v2>2 && v5>2) 
+        else if(v0>2 && v1>2 && v2>2 && v5>2 && v3<2 && v4<2 && v6<2 && v7<2 && v8<2 && v9<2)  //10100
         {
             lcd.locate(k,j);
             lcd.printf("T");
@@ -510,7 +521,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v2>2 && v7>2)
+        else if(v0>2 && v2>2 && v7>2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2 && v8<2 && v9<2)  //10101
         {
             lcd.locate(k,j);
             lcd.printf("U");
@@ -520,7 +531,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v7>2) 
+        else if(v0>2 && v7>2 && v1<2 && v2<2 && v3<2 && v4<2 && v5<2 && v6<2 && v8<2 && v9<2)  //10110
         {
             lcd.locate(k,j);
             lcd.printf("V");
@@ -530,7 +541,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v1<2 && v2<2 && v5>2 && v4<2)
+        else if(v0>2 && v1<2 && v2<2 && v5>2 && v3<2 && v4<2 && v6<2 && v7<2 && v8<2 && v9<2)  //10111
         {
             lcd.locate(k,j);
             lcd.printf("W");
@@ -540,7 +551,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0>2 && v8>2 && v2<2) 
+        else if(v0>2 && v8>2 && v1<2 && v2<2 && v3<2 && v4<2 && v5<2 && v6<2 && v7<2 && v9<2)  //11000
         {
             lcd.locate(k,j);
             lcd.printf("X");
@@ -550,7 +561,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v0<2 && v1>2 && v2>2)
+        else if(v0<2 && v1>2 && v2>2 && v3<2 && v4<2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //11001
         {
             lcd.locate(k,j);
             lcd.printf("Y");
@@ -560,7 +571,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v8<2 && v0>2 && v1>2 && v3<2)  
+        else if(v0>2 && v1>2 && v3<2 && v2<2 && v4<2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //11010
         {
             lcd.locate(k,j);
             lcd.printf("Z");
@@ -570,7 +581,7 @@ int main() {
             k++;
             b=k;
         }
-         else if(v0<2 && v1<2 && v2<2 && v3>2)
+         else if(v0<2 && v1<2 && v2<2 && v3>2 && v4<2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //11100
         {
             lcd.locate(k,j);
             lcd.printf(" ");
@@ -580,7 +591,7 @@ int main() {
             k++;
             b=k;
         }
-        else if(v9>2)
+        else if(v0>2 && v1<2 && v2<2 && v3<2 && v4<2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //11100
         {
             lcd.locate(k,j);
             lcd.printf(" ");
@@ -590,14 +601,11 @@ int main() {
             k--;
             b=k;
         }
-        else if(v4>2)
+        else if(v0<2 && v1<2 && v2<2 && v3<2 && v4>2 && v5<2 && v6<2 && v7<2 && v8<2 && v9<2)  //01111
         {
             lcd.locate(k,j);
             lcd.printf(".");
             wait(0.5);
-            buzzer = 1;
-            wait(2);
-            buzzer = 0;
             i++;
             a=i;
             k++;
@@ -614,6 +622,3 @@ int main() {
         }    
     }
 }
-
-
-ONE  LASST  TIME
