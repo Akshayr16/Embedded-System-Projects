@@ -1,0 +1,619 @@
+#include "mbed.h"
+#include "TextLCD.h"
+AnalogIn Analog_In0 (PTB0);
+AnalogIn Analog_In1 (PTB1);
+AnalogIn Analog_In2 (PTB2);
+AnalogIn Analog_In3 (PTB3);
+AnalogIn Analog_In4 (PTC2);
+AnalogIn Analog_In5 (PTE20);
+AnalogIn Analog_In6 (PTE22);
+AnalogIn Analog_In7 (PTC0);
+AnalogIn Analog_In8 (PTD6);
+AnalogIn Analog_In9 (PTD5);
+
+DigitalOut gnd0 (PTA1);
+DigitalOut gnd1 (PTA12);
+DigitalOut gnd2 (PTA2);
+DigitalOut vdd1 (PTE0);
+DigitalOut myled(LED1);
+DigitalOut buzzer(PTD1);
+
+// FVP for lcd.rs,en,d4-d7, type of lcd
+TextLCD lcd(PTD4,PTA4,PTA5,PTC8,PTC9,PTA13, TextLCD::LCD16x2);
+Serial pc(USBTX,USBRX);    
+
+int main() {
+    gnd0=0;
+    gnd1=0;
+    gnd2=0;
+    vdd1=3.3;
+    int i=0;
+    int j=0;
+    int k=0;
+    int a=0;
+    int b=0;
+    
+    while(1) {
+            
+        
+        float r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,v0,v1,v2,v3,v4,v5,v6,v7,v8,v9;
+        
+        r0=Analog_In0.read();
+        r1=Analog_In1.read();
+        r2=Analog_In2.read();
+        r3=Analog_In3.read();
+        r4=Analog_In4.read();
+        r5=Analog_In5.read();
+        r6=Analog_In6.read();
+        r7=Analog_In7.read();
+        r8=Analog_In8.read();
+        r9=Analog_In9.read();
+        v0=Analog_In0*3.3;
+        v1=Analog_In1*3.3;
+        v2=Analog_In2*3.3;
+        v3=Analog_In3*3.3;
+        v4=Analog_In4*3.3;
+        v5=Analog_In5*3.3;
+        v6=Analog_In6*3.3;
+        v7=Analog_In7*3.3;
+        v8=Analog_In8*3.3;
+        v9=Analog_In9*3.3;
+        
+        
+        myled = 0;
+        wait(0.2);
+        myled = 1;
+        wait(0.2);
+        buzzer = 0;
+        
+        if(i<=15) 
+        {
+            
+        if(v0>2 && v1>2 && v2>2 && v3>2 && v4>2)  
+        {
+            lcd.locate(i,j);
+            lcd.printf("A");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v4<2 && v0>2 && v1>2 && v2>2 && v5>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("B");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v8<2 && v0>2 && v1>2 && v2>2 && v4<2 && v5<2 && v6<2 && v7<2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("C");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v1>2 && v4>2 && v2<2 && v5<2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("D");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v1>2 && v2>2 && v3<2 && v4>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("E");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v1>2 && v6>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("F");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v8<2 && v0>2 && v1>2 && v2<2 && v3<2 && v5>2 && v4<2)     
+        {
+            lcd.locate(i,j);
+            lcd.printf("G");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v8>2) 
+        {
+            lcd.locate(i,j);
+            lcd.printf("H");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0<2 && v1>2 && v2>2 && v5<2 && v7>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("I");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0<2 && v1>2 && v2>2 && v5<2 && v6>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("J");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v2>2 && v7<2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("K");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v1>2 && v5>2 && v4>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("L");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v9>2 && v2>2 && v8<2}
+        {
+            lcd.locate(i,j);
+            lcd.printf("M");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v4>2  && v8>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("N");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0<2 && v1>2 && v2>2 && v3<2 && v4>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("O");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v1<2 && v2>2 && v5>2 && v4<2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("P");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v1>2 && v5>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("Q");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v6>2 && v7>2) 
+        {
+            lcd.locate(i,j);
+            lcd.printf("R");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v2>2 && v1>2 && v8>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("S");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v1>2 && v2>2 && v5>2) 
+        {
+            lcd.locate(i,j);
+            lcd.printf("T");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v2>2 && v7>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("U");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v7>2)  
+        {
+            lcd.locate(i,j);
+            lcd.printf("V");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v1<2 && v2<2 && v5>2 && v4<2) 
+        {
+            lcd.locate(i,j);
+            lcd.printf("W");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0>2 && v8>2 && v2<2) 
+        {
+            lcd.locate(i,j);
+            lcd.printf("X");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v0<2 && v1>2 && v2>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("Y");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v8<2 && v0>2 && v1>2 && v3<2)
+        {
+            lcd.locate(i,j);
+            lcd.printf("Z");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+         else if(v0<2 && v1<2 && v2<2 && v3>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf(" ");
+            wait(0.5);
+            i++;
+            a=i;
+        }
+        else if(v9>2)
+        {
+            lcd.locate(i,j);
+            lcd.printf(" ");
+            wait(0.5);
+            i--;
+            a=i;
+        }
+        else if(v0<2 && v2<2 && v3<2 && v4>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf(".");
+            wait(0.5);
+            buzzer = 1;
+            wait(2);
+            buzzer = 0;
+            i++;
+            a=i;
+        }
+    }
+        
+    else if(a>15 && b<=15)
+        {
+            j=1;
+            
+        if(v0>2 && v1>2 && v2>2 && v3>2 && v4>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("A");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v4<2 && v0>2 && v1>2 && v2>2 && v5>2) 
+        {
+            lcd.locate(k,j);
+            lcd.printf("B");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v8<2 && v0>2 && v1>2 && v2>2 && v4<2 && v5<2 && v6<2 && v7<2)  
+        {
+            lcd.locate(k,j);
+            lcd.printf("C");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v1>2 && v4>2 && v2<2 && v5<2) 
+        {
+            lcd.locate(k,j);
+            lcd.printf("D");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v1>2 && v2>2 && v3<2 && v4>2) 
+        {
+            lcd.locate(k,j);
+            lcd.printf("E");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v1>2 && v6>2)  
+        {
+            lcd.locate(k,j);
+            lcd.printf("F");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v8<2 && v0>2 && v1>2 && v2<2 && v3<2 && v5>2 && v4<2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("G");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v2<2 && v5>2 && v7>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("H");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0<2 && v1>2 && v2>2 && v5<2 && v7>2)  
+        {
+            lcd.locate(k,j);
+            lcd.printf("I");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0<2 && v1>2 && v2>2 && v5<2 && v6>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("J");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v2>2 && v7<2 && v1<2 && v3<2 && v4<2 && v5<2 && v6<2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("K");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v1>2 && v5>2 && v4>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("L");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v9>2 && v2>2 && v8<2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("M");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v4>2  && v8>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("N");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0<2 && v1>2 && v2>2 && v3<2 && v4>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("O");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v1<2 && v2>2 && v5>2 && v4<2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("P");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v1>2 && v5>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("Q");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v6>2 && v7>2)   
+        {
+            lcd.locate(k,j);
+            lcd.printf("R");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v2>2 && v1>2 && v8>2)  
+        {
+            lcd.locate(k,j);
+            lcd.printf("S");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v1>2 && v2>2 && v5>2) 
+        {
+            lcd.locate(k,j);
+            lcd.printf("T");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v2>2 && v7>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("U");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v7>2) 
+        {
+            lcd.locate(k,j);
+            lcd.printf("V");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v1<2 && v2<2 && v5>2 && v4<2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("W");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0>2 && v8>2 && v2<2) 
+        {
+            lcd.locate(k,j);
+            lcd.printf("X");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v0<2 && v1>2 && v2>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf("Y");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v8<2 && v0>2 && v1>2 && v3<2)  
+        {
+            lcd.locate(k,j);
+            lcd.printf("Z");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+         else if(v0<2 && v1<2 && v2<2 && v3>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf(" ");
+            wait(0.5);
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+        else if(v9>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf(" ");
+            wait(0.5);
+            i--;
+            a=i;
+            k--;
+            b=k;
+        }
+        else if(v4>2)
+        {
+            lcd.locate(k,j);
+            lcd.printf(".");
+            wait(0.5);
+            buzzer = 1;
+            wait(2);
+            buzzer = 0;
+            i++;
+            a=i;
+            k++;
+            b=k;
+        }
+    }
+    else if(b>15 && a>31)
+        {
+            j=0;
+            i=0;
+            a=0;
+            b=0;
+            lcd.cls();    
+        }    
+    }
+}
+
+
+ONE  LASST  TIME
