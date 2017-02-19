@@ -1,0 +1,34 @@
+#include "mbed.h"
+
+//ldr voltage
+AnalogIn vin(PTB0);
+Serial pc(USBTX,USBRX);
+
+int main()
+{
+    //lookup table
+    float Vr_lookup[]={0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
+    float lux_lookup[]={10000,2607,2000,1111,600,350,191,28,16,4,0};
+    float lux,Vr;
+    pc.printf("lux meter");
+    float m;
+
+    while(1)
+    {
+         Vr =vin; 
+         int a =((Vr/3.3)*100);
+         for (int j=0;j<8;j++)
+         {
+               if(Vr_lookup[j+1]-Vr > 0)
+               {
+                   m=(lux_lookup[j+1]-lux_lookup[j])/(Vr_lookup[j+1]- Vr_lookup[j]);
+                   lux= m*Vr + lux_lookup[j];
+                   // pc.printf("value is %.2f \n \r",lux);
+                   pc.printf("$%d %d",lux,a);
+                   wait(0.5);
+                   break;
+               }  
+         }
+    
+    }
+}
